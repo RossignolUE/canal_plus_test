@@ -44,8 +44,6 @@ const Interface = (props: IInterface) => {
     }
   }, 1000);
 
-  // className={`interface ${visibleInterface ? 'display' : 'hide'}`}
-
   return (
     <>
       <div
@@ -53,28 +51,30 @@ const Interface = (props: IInterface) => {
           setVisibleInterface(true);
         }}
         onMouseLeave={() => setVisibleInterface(false)}
-        className={`interface display`}
+        className={`interface ${visibleInterface ? 'display' : 'hide'}`}
       >
-        <>
-          <ProgressBar durationVideo={durationVideo} player={props.player} />
-          <ButtonPlayer
-            fullScreen={props.fullScreen}
-            player={props.player}
-            statePlayer={statePlayer}
-            openInformationInterface={() => setInformationsInterface(true)}
-          />
-          <SlidingPane
-            isOpen={informationsInterface}
-            from="right"
-            width="30%"
-            onRequestClose={() => setInformationsInterface(false)}
-          >
-            <SlideInformation
-              duration={durationVideo}
-              stateSlide={informationsInterface}
+        {visibleInterface && (
+          <>
+            <ProgressBar durationVideo={durationVideo} player={props.player} />
+            <ButtonPlayer
+              fullScreen={props.fullScreen}
+              player={props.player}
+              statePlayer={statePlayer}
+              openInformationInterface={() => setInformationsInterface(true)}
             />
-          </SlidingPane>
-        </>
+            <SlidingPane
+              isOpen={informationsInterface}
+              from="right"
+              width="30%"
+              onRequestClose={() => setInformationsInterface(false)}
+            >
+              <SlideInformation
+                duration={durationVideo}
+                stateSlide={informationsInterface}
+              />
+            </SlidingPane>
+          </>
+        )}
       </div>
     </>
   );
