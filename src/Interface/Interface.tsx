@@ -1,9 +1,11 @@
 import React from 'react';
 import RxPlayer from 'rx-player';
 import { ButtonPlayer } from './ButtonPlayer/ButtonPlayer';
-
-import './Interface.css';
 import { ProgressBar } from './ProgressBar/ProgressBar';
+import SlidingPane from 'react-sliding-pane';
+import 'react-sliding-pane/dist/react-sliding-pane.css';
+import './Interface.css';
+import { SlideInformation } from './SlideInformation/SlideInformation';
 
 export type IInterface = {
   player: RxPlayer;
@@ -12,6 +14,8 @@ export type IInterface = {
 
 const Interface = (props: IInterface) => {
   const [visibleInterface, setVisibleInterface] = React.useState(false);
+  const [informationsInterface, setInformationsInterface] =
+    React.useState(false);
   const [statePlayer, setStatePlayer] = React.useState<string>(
     props.player.getPlayerState()
   );
@@ -40,26 +44,37 @@ const Interface = (props: IInterface) => {
     }
   }, 1000);
 
+  // className={`interface ${visibleInterface ? 'display' : 'hide'}`}
+
   return (
     <>
       <div
         onMouseEnter={() => {
           setVisibleInterface(true);
-          console.log('Status player : ', props.player.getPlayerState());
         }}
         onMouseLeave={() => setVisibleInterface(false)}
-        className={`interface ${visibleInterface ? 'display' : 'hide'}`}
+        className={`interface display`}
       >
-        {visibleInterface && (
-          <>
-            <ProgressBar durationVideo={durationVideo} player={props.player} />
-            <ButtonPlayer
-              fullScreen={props.fullScreen}
-              player={props.player}
-              statePlayer={statePlayer}
+        <>
+          <ProgressBar durationVideo={durationVideo} player={props.player} />
+          <ButtonPlayer
+            fullScreen={props.fullScreen}
+            player={props.player}
+            statePlayer={statePlayer}
+            openInformationInterface={() => setInformationsInterface(true)}
+          />
+          <SlidingPane
+            isOpen={informationsInterface}
+            from="right"
+            width="30%"
+            onRequestClose={() => setInformationsInterface(false)}
+          >
+            <SlideInformation
+              duration={durationVideo}
+              stateSlide={informationsInterface}
             />
-          </>
-        )}
+          </SlidingPane>
+        </>
       </div>
     </>
   );

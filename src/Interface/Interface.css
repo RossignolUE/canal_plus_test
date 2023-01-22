@@ -11,3 +11,17 @@
 .interface.hide {
     background-color: transparent;
 }
+
+.slide-pane {
+    background-color: rgba(0, 0, 0, 50%);
+    color: white;
+}
+
+.slide-pane div{
+    background-color: rgba(0, 0, 0, 50%);
+    color: white;
+}
+
+.slide-pane__title-wrapper .slide-pane__subtitle{
+    display: none;
+}

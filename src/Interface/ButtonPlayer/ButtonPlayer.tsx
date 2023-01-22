@@ -7,6 +7,7 @@ export interface IButtonPlayer {
   player: RxPlayer;
   statePlayer: string;
   fullScreen: () => void;
+  openInformationInterface: () => void;
 }
 
 export const ButtonPlayer = (props: IButtonPlayer) => {
@@ -42,13 +43,7 @@ export const ButtonPlayer = (props: IButtonPlayer) => {
       >
         Screen
       </Button>
-      <Button
-        onClick={() => {
-          props.fullScreen();
-        }}
-      >
-        info
-      </Button>
+      <Button onClick={() => props.openInformationInterface()}>info</Button>
     </>
   );
 };
