@@ -3,7 +3,7 @@ import RxPlayer from 'rx-player';
 import Spinner from 'react-bootstrap/Spinner';
 
 export type IPlayButton = {
-  player: RxPlayer;
+  playerState: string;
 };
 
 const PlayButton = () => {
@@ -12,6 +12,14 @@ const PlayButton = () => {
 
 const PauseButton = () => {
   return <>Pause</>;
+};
+
+const LoadButton = () => {
+  return <>Load</>;
+};
+
+const ReviewButton = () => {
+  return <>Review</>;
 };
 
 const LoadingLogo = () => {
@@ -27,10 +35,10 @@ const ErrorLogo = () => {
 };
 
 const PlayPauseButton = (props: IPlayButton) => {
-  const getButtonOrLogo = (player: RxPlayer): JSX.Element => {
-    switch (player.getPlayerState()) {
+  const getButtonOrLogo = (playerState: string): JSX.Element => {
+    switch (playerState) {
       case 'STOPPED':
-        return <PlayButton />;
+        return <LoadButton />;
       case 'LOADING':
         return <LoadingLogo />;
       case 'LOADED':
@@ -44,7 +52,7 @@ const PlayPauseButton = (props: IPlayButton) => {
       case 'SEEKING':
         return <LoadingLogo />;
       case 'ENDED':
-        return <PlayButton />;
+        return <ReviewButton />;
       case 'RELOADING':
         return <LoadingLogo />;
       default:
@@ -52,7 +60,7 @@ const PlayPauseButton = (props: IPlayButton) => {
     }
   };
 
-  return getButtonOrLogo(props.player);
+  return getButtonOrLogo(props.playerState);
 };
 
 export default PlayPauseButton;

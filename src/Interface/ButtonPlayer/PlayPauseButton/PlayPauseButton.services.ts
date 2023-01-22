@@ -1,6 +1,6 @@
 import RxPlayer from 'rx-player';
 
-export const utilsPlayer = {
+export const PlayPauseButtonServices = {
   swithPlayOrPause: (player: RxPlayer) => {
     switch (player.getPlayerState()) {
       case 'LOADED':

@@ -4,41 +4,47 @@ import './App.css';
 import Interface from './Interface/Interface';
 
 const App = () => {
-  let player: RxPlayer | undefined = undefined;
+  const [interfaceVideo, setInterfaceVideo] = React.useState<
+    JSX.Element | undefined
+  >(undefined);
+  let player: RxPlayer | undefined = new RxPlayer();
 
-  player = new RxPlayer({
-    videoElement: document.querySelector('video')!,
-  });
-  player.loadVideo({
-    url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-    transport: 'directfile',
-  });
+  const getInterface = (player: RxPlayer) => {
+    return (
+      <Interface
+        fullScreen={() => {
+          if (document.fullscreenElement !== null) {
+            document.exitFullscreen();
+          } else {
+            document.querySelector('.App')!.requestFullscreen();
+          }
+        }}
+        player={player}
+      />
+    );
+  };
 
-  const videoRef = React.useRef();
+  window.onbeforeunload = function () {
+    player?.stop();
+    player?.dispose();
+    document.querySelector('video')!.remove();
+    player = undefined;
+  };
 
-  React.useEffect(
-    () => () => {
-      if (player !== undefined) {
-        player.removeEventListener('error');
-        player.stop();
-      }
-    },
-    []
-  );
+  React.useEffect(() => {
+    player!.videoElement = document.querySelector('video')!;
+    player!.loadVideo({
+      url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+      transport: 'directfile',
+    });
+    setInterfaceVideo(getInterface(player!));
+  }, []);
 
   return (
-    <>
-      <video ref={videoRef as any} />
-      {player && (
-        <Interface
-          player={player}
-          fullScreen={() => {
-            document.querySelector('video')!.requestFullscreen();
-          }}
-          refVideoPlayer={videoRef}
-        />
-      )}
-    </>
+    <div className="App">
+      <video />
+      {interfaceVideo ? interfaceVideo : <></>}
+    </div>
   );
 };
 
