@@ -1,7 +1,7 @@
 import React from 'react';
 import RxPlayer from 'rx-player';
-import './App.css';
 import Interface from './Interface/Interface';
+import './App.css';
 
 const App = () => {
   let player: RxPlayer | undefined = new RxPlayer();

@@ -1,11 +1,11 @@
 import React from 'react';
 import RxPlayer from 'rx-player';
+import SlidingPane from 'react-sliding-pane';
 import { ButtonPlayer } from './ButtonPlayer/ButtonPlayer';
 import { ProgressBar } from './ProgressBar/ProgressBar';
-import SlidingPane from 'react-sliding-pane';
+import { SlideInformation } from './SlideInformation/SlideInformation';
 import 'react-sliding-pane/dist/react-sliding-pane.css';
 import './Interface.css';
-import { SlideInformation } from './SlideInformation/SlideInformation';
 
 export type IInterface = {
   player: RxPlayer;
@@ -26,7 +26,6 @@ const Interface = (props: IInterface) => {
   const [mouseMoving, setMouseMoving] = React.useState(true);
 
   let i = setInterval(function () {
-    let previousState = statePlayer;
     let currentState = props.player.getPlayerState();
     setStatePlayer(currentState);
     if (currentState === 'LOADED') {

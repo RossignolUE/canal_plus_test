@@ -1,7 +1,7 @@
+import RxPlayer from 'rx-player';
 import PlayPauseButton from './PlayPauseButton/PlayPauseButton';
 import { PlayPauseButtonServices } from './PlayPauseButton/PlayPauseButton.services';
 import { Button, Container, Row, Col } from 'reactstrap';
-import RxPlayer from 'rx-player';
 import { RxSpeakerLoud, RxSpeakerModerate } from 'react-icons/rx';
 import { BsFillInfoCircleFill, BsArrowsFullscreen } from 'react-icons/bs';
 import './ButtonPlayer.css';

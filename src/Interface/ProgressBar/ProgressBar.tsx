@@ -1,7 +1,7 @@
 import RxPlayer from 'rx-player';
+import React from 'react';
 import { Input } from 'reactstrap';
 import './ProgressBar.css';
-import React from 'react';
 
 export interface IDurationVideo {
   timeStamp: number;
