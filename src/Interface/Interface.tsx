@@ -13,7 +13,6 @@ export type IInterface = {
 };
 
 const Interface = (props: IInterface) => {
-  const [visibleInterface, setVisibleInterface] = React.useState(false);
   const [informationsInterface, setInformationsInterface] =
     React.useState(false);
   const [statePlayer, setStatePlayer] = React.useState<string>(
@@ -24,12 +23,13 @@ const Interface = (props: IInterface) => {
     minutes: 0,
     seconds: 0,
   });
+  const [mouseMoving, setMouseMoving] = React.useState(true);
 
   let i = setInterval(function () {
     let previousState = statePlayer;
     let currentState = props.player.getPlayerState();
     setStatePlayer(currentState);
-    if (previousState === 'LOADING' && currentState === 'LOADED') {
+    if (currentState === 'LOADED') {
       props.player.play();
     }
     if (props.player.getPosition() > 0) {
@@ -44,24 +44,64 @@ const Interface = (props: IInterface) => {
     }
   }, 1000);
 
+  const setTimeoutMouveMouse = () => {
+    let mouseMovingTimeout;
+    setMouseMoving(true);
+    document.documentElement.style.cursor = 'auto';
+    clearTimeout(mouseMovingTimeout);
+    mouseMovingTimeout = setTimeout(function () {
+      setMouseMoving(false);
+      document.documentElement.style.cursor = 'none';
+    }, 8000);
+  };
+
   return (
-    <>
+    <div
+      className="parent_interface"
+      onMouseMove={() => {
+        setTimeoutMouveMouse();
+      }}
+      onMouseEnter={() => {
+        setTimeoutMouveMouse();
+      }}
+      onClick={() => {
+        setTimeoutMouveMouse();
+      }}
+    >
       <div
-        onMouseEnter={() => {
-          setVisibleInterface(true);
+        className={`interface ${
+          mouseMoving || informationsInterface ? 'display' : 'hide'
+        }`}
+        onMouseMove={() => {
+          setTimeoutMouveMouse();
         }}
-        onMouseLeave={() => setVisibleInterface(false)}
-        className={`interface ${visibleInterface ? 'display' : 'hide'}`}
+        onMouseEnter={() => {
+          setTimeoutMouveMouse();
+        }}
+        onClick={() => {
+          setTimeoutMouveMouse();
+        }}
       >
-        {visibleInterface && (
+        {(mouseMoving || informationsInterface) && (
           <>
-            <ProgressBar durationVideo={durationVideo} player={props.player} />
-            <ButtonPlayer
-              fullScreen={props.fullScreen}
-              player={props.player}
-              statePlayer={statePlayer}
-              openInformationInterface={() => setInformationsInterface(true)}
-            />
+            <div className="interface_player">
+              <div className="button_player">
+                <ButtonPlayer
+                  fullScreen={props.fullScreen}
+                  player={props.player}
+                  statePlayer={statePlayer}
+                  openInformationInterface={() =>
+                    setInformationsInterface(true)
+                  }
+                />
+              </div>
+              <div className="progress_bar">
+                <ProgressBar
+                  durationVideo={durationVideo}
+                  player={props.player}
+                />
+              </div>
+            </div>
             <SlidingPane
               isOpen={informationsInterface}
               from="right"
@@ -76,7 +116,7 @@ const Interface = (props: IInterface) => {
           </>
         )}
       </div>
-    </>
+    </div>
   );
 };
 

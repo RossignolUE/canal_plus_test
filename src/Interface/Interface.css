@@ -17,11 +17,23 @@
     color: white;
 }
 
-.slide-pane div{
-    background-color: rgba(0, 0, 0, 50%);
+.slide-pane__header {
+    background-color: transparent;
     color: white;
 }
 
 .slide-pane__title-wrapper .slide-pane__subtitle{
     display: none;
+}
+
+.interface_player {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding-bottom: 1rem;
+}
+
+.progress_bar {
+    text-align: center;
+    color: white;
 }

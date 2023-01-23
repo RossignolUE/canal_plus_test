@@ -18,6 +18,12 @@ export const PlayPauseButtonServices = {
       case 'PAUSED':
         player.play();
         break;
+      case 'ENDED':
+        player.loadVideo({
+          url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+          transport: 'directfile',
+        });
+        break;
       default:
         break;
     }

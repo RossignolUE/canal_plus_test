@@ -1,0 +1,32 @@
+.button_player_content button {
+    max-width: none;
+}
+
+.button_player_content button {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.button_player_content .col {
+    text-align: initial;
+}
+
+.button_player_content .col:last-child {
+    text-align: right;
+}
+
+button.btn.btn-secondary {
+    border-radius: 50%;
+    background-color: transparent;
+    border: transparent;
+}
+
+button.btn.btn-secondary:active {
+    box-shadow: none;
+    outline: none;
+}
+
+button.btn.btn-secondary:focus {
+    box-shadow: none;
+    outline: none;
+}

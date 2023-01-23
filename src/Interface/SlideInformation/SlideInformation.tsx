@@ -42,7 +42,6 @@ export const SlideInformation = (props: ISlideInformation) => {
       axios
         .get(`${baseUrl}/scene/${durationSnapShot.timeStamp}`)
         .then(function (response: any) {
-          console.log(response);
           setInformationScene({
             status: 'Sucess',
             data: response.data,
@@ -65,34 +64,37 @@ export const SlideInformation = (props: ISlideInformation) => {
         return (
           <div>
             <p>Scene at {currentSceneDuration}</p>
-            <p>Casting :</p>
-            <ul>
-              {request.data.casting.map(
-                (
-                  actor: {
-                    id: number;
-                    description: string;
-                    image: string;
-                    name: string;
-                  },
-                  index: number
-                ) => {
-                  return (
-                    <li key={`${actor.id}_${index}`}>
-                      name: {actor.name}
-                      <br />
-                      <img
-                        src={`${baseUrl}${actor.image.replace('.', '')}`}
-                        alt=""
-                        width={'20%'}
-                      />
-                      {actor.description}
-                    </li>
-                  );
-                }
-              )}
-              <li></li>
-            </ul>
+            {request.data.casting.length > 0 && (
+              <>
+                <p>Casting :</p>
+                <ul>
+                  {request.data.casting.map(
+                    (
+                      actor: {
+                        id: number;
+                        description: string;
+                        image: string;
+                        name: string;
+                      },
+                      index: number
+                    ) => {
+                      return (
+                        <li key={`${actor.id}_${index}`}>
+                          name: {actor.name}
+                          <br />
+                          <img
+                            src={`${baseUrl}${actor.image.replace('.', '')}`}
+                            alt=""
+                            width={'20%'}
+                          />
+                          {actor.description}
+                        </li>
+                      );
+                    }
+                  )}
+                </ul>
+              </>
+            )}
           </div>
         );
       case 'Pending':
@@ -102,7 +104,7 @@ export const SlideInformation = (props: ISlideInformation) => {
           </Spinner>
         );
       case 'Error':
-        return <>{request.data}</>;
+        return <>Erreur : {request.data.toString()}</>;
       case 'Empty':
         return (
           <Spinner animation="border" role="status">

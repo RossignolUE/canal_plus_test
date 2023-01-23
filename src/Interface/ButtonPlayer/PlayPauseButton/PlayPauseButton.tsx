@@ -1,25 +1,23 @@
-import React from 'react';
-import RxPlayer from 'rx-player';
 import Spinner from 'react-bootstrap/Spinner';
+import {
+  BsFillPlayFill,
+  BsFillPauseFill,
+  BsArrowClockwise,
+} from 'react-icons/bs';
 
 export type IPlayButton = {
   playerState: string;
 };
-
 const PlayButton = () => {
-  return <>Play</>;
+  return <BsFillPlayFill />;
 };
 
 const PauseButton = () => {
-  return <>Pause</>;
-};
-
-const LoadButton = () => {
-  return <>Load</>;
+  return <BsFillPauseFill />;
 };
 
 const ReviewButton = () => {
-  return <>Review</>;
+  return <BsArrowClockwise />;
 };
 
 const LoadingLogo = () => {
@@ -38,7 +36,7 @@ const PlayPauseButton = (props: IPlayButton) => {
   const getButtonOrLogo = (playerState: string): JSX.Element => {
     switch (playerState) {
       case 'STOPPED':
-        return <LoadButton />;
+        return <PlayButton />;
       case 'LOADING':
         return <LoadingLogo />;
       case 'LOADED':

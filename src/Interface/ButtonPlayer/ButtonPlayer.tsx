@@ -1,7 +1,10 @@
 import PlayPauseButton from './PlayPauseButton/PlayPauseButton';
 import { PlayPauseButtonServices } from './PlayPauseButton/PlayPauseButton.services';
-import { Button } from 'reactstrap';
+import { Button, Container, Row, Col } from 'reactstrap';
 import RxPlayer from 'rx-player';
+import { RxSpeakerLoud, RxSpeakerModerate } from 'react-icons/rx';
+import { BsFillInfoCircleFill, BsArrowsFullscreen } from 'react-icons/bs';
+import './ButtonPlayer.css';
 
 export interface IButtonPlayer {
   player: RxPlayer;
@@ -12,38 +15,47 @@ export interface IButtonPlayer {
 
 export const ButtonPlayer = (props: IButtonPlayer) => {
   return (
-    <>
-      <Button
-        onClick={() => {
-          PlayPauseButtonServices.swithPlayOrPause(props.player);
-        }}
-      >
-        <PlayPauseButton playerState={props.statePlayer} />
-      </Button>
-      <Button
-        onClick={() => {
-          if (props.player.getVolume() < 1)
-            props.player.setVolume(props.player.getVolume() + 0.1);
-        }}
-      >
-        Vol+
-      </Button>
-      <Button
-        onClick={() => {
-          if (props.player.getVolume() > 0.1)
-            props.player.setVolume(props.player.getVolume() - 0.1);
-        }}
-      >
-        Vol-
-      </Button>
-      <Button
-        onClick={() => {
-          props.fullScreen();
-        }}
-      >
-        Screen
-      </Button>
-      <Button onClick={() => props.openInformationInterface()}>info</Button>
-    </>
+    <Container className="button_player_content">
+      <Row>
+        <Col>
+          <Button
+            onClick={() => {
+              PlayPauseButtonServices.swithPlayOrPause(props.player);
+            }}
+          >
+            <PlayPauseButton playerState={props.statePlayer} />
+          </Button>
+          <Button
+            onClick={() => {
+              if (props.player.getVolume() < 1)
+                props.player.setVolume(props.player.getVolume() + 0.1);
+            }}
+          >
+            <RxSpeakerLoud />
+          </Button>
+          <Button
+            onClick={() => {
+              if (props.player.getVolume() > 0.1)
+                props.player.setVolume(props.player.getVolume() - 0.1);
+            }}
+          >
+            <RxSpeakerModerate />
+          </Button>
+        </Col>
+        <Col></Col>
+        <Col>
+          <Button onClick={() => props.openInformationInterface()}>
+            <BsFillInfoCircleFill />
+          </Button>
+          <Button
+            onClick={() => {
+              props.fullScreen();
+            }}
+          >
+            <BsArrowsFullscreen />
+          </Button>
+        </Col>
+      </Row>
+    </Container>
   );
 };
